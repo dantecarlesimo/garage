@@ -10,8 +10,6 @@ Sale.create([
     {user_id: 1, title: "Moving Sale", address: "123 Main St.", city: "Alameda", zipcode: 94501, date:"June 1, 2014", time_start: "7 am", time_end: "2 pm", description: "Moving out of state. Tons of great furniture!"},
     {user_id: 2, title: "Estate Sale", address: "456 State St.", city: "Daly City", zipcode: 94014, date:"June 15, 2014", time_start: "8 am", time_end: "4 pm", description: "Everything must go! Cheap prices"},
     {user_id: 3, title: "Antiques", address: "789 Church St.", city: "San Francisco", zipcode: 94114, date:"June 9, 2014", time_start: "7 am", time_end: "6 pm", description: "Great antiques and collectables"},
-    {user_id: 4, title: "Kids Toy Sale", address: "1234 Side St.", city: "San Mateo", zipcode: 94002, date:"June 23, 2014", time_start: "7 am", time_end: "1 pm", description: "Lots of kids toys, stuffed animals, books, etc"},
-    {user_id: 5, title: "Kitchen Sale", address: "5678 Baker St.", city: "San Francisco", zipcode: 94114, date:"June 11, 2014", time_start: "6 am", time_end: "1 pm", description: "Kitchen appliances, cookware, and dishes"}
   ])
 
 Item.create([
@@ -20,4 +18,10 @@ Item.create([
     {sale_id: 2, transaction_id: nil, name: "Lamp", description: "Ugly brass lamp that works great", price: 50},
     {sale_id: 3, transaction_id: nil, name: "Cabinet", description: "Antique mahogany cabinet with glass doors", price: 1000},
     {sale_id: 3, transaction_id: nil, name: "Bar Table", description: "1950s bar table with glass rack and liquor storage", price: 250}
+  ])
+
+Transaction.create([
+    {user_id: 4, seller_id: 1, item_id: 2},
+    {user_id: 5, seller_id: 2, item_id: 2},
+    {user_id: 5, seller_id: 3, item_id: 5}
   ])
