@@ -13,3 +13,11 @@ Sale.create([
     {user_id: 4, title: "Kids Toy Sale", address: "1234 Side St.", city: "San Mateo", zipcode: 94002, date:"June 23, 2014", time_start: "7 am", time_end: "1 pm", description: "Lots of kids toys, stuffed animals, books, etc"},
     {user_id: 5, title: "Kitchen Sale", address: "5678 Baker St.", city: "San Francisco", zipcode: 94114, date:"June 11, 2014", time_start: "6 am", time_end: "1 pm", description: "Kitchen appliances, cookware, and dishes"}
   ])
+
+Item.create([
+    {sale_id: 1, transaction_id: nil, name: "Sofa", description: "Brown leather, hardly used", price: 500},
+    {sale_id: 1, transaction_id: nil, name: "Queen Bed", description: "Wood frame, looks great", price: 350},
+    {sale_id: 2, transaction_id: nil, name: "Lamp", description: "Ugly brass lamp that works great", price: 50},
+    {sale_id: 3, transaction_id: nil, name: "Cabinet", description: "Antique mahogany cabinet with glass doors", price: 1000},
+    {sale_id: 3, transaction_id: nil, name: "Bar Table", description: "1950s bar table with glass rack and liquor storage", price: 250}
+  ])
