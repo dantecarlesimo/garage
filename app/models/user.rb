@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true         #User must have a name
   validates :phone, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
 
+  has_many :sales
+
 end
