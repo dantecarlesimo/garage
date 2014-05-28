@@ -1,4 +1,10 @@
-<%= render :partial => 'nav' %>
+<%= render :partial => 'nav' %> <%= current_user.name %>
+
+<h2>My Garage Sales</h2>
+
+<% if @user_sales==[] %>
+  <p>You don't have any Garage Sales</p>
+<%end%>
 
 <ul>
   <% @user_sales.each do |sale| %>
@@ -6,5 +12,5 @@
   <% end %>
 </ul>
 
-<%= current_user.name %>
+
 

@@ -1,5 +1,11 @@
 <%= render :partial => 'nav' %>
 
+<h2>My Items</h2>
+
+<% if @user_sales==[] %>
+  <p>You don't have any Items</p>
+<%end%>
+
 <ul>
   <% @user_sales.each do |sale| %>
     <% sale.items.each do |item|%>

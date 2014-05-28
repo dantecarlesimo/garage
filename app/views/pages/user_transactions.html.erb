@@ -1,5 +1,11 @@
 <%= render :partial => 'nav' %>
 
+<h2>My Transactions</h2>
+
+<% if @user_sales==[] %>
+  <p>You don't have any Transactions</p>
+<%end%>
+
 <ul>
   <% @user_transactions.each do |transaction| %>
      <li><%= link_to transaction.item.name %></li>

@@ -1,3 +1,4 @@
-<%= link_to "My Garage Sales", '/user_sales'%>
-<%= link_to "My Items", '/user_items'%>
-<%= link_to "My Transactions", '/user_transactions' %>
+<%= button_to "New Garage Sale", {controller: :sales, action: :new}, :method => :get,  class: "btn btn-sm btn-primary" %> <br>
+<%= link_to "My Garage Sales", '/user_sales'%> <br>
+<%= link_to "My Items", '/user_items'%> <br>
+<%= link_to "My Transactions", '/user_transactions' %> <br>
