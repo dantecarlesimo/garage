@@ -22,6 +22,6 @@ Item.create([
 
 Transaction.create([
     {user_id: 4, seller_id: 1, item_id: 2},
-    {user_id: 5, seller_id: 2, item_id: 2},
+    {user_id: 5, seller_id: 2, item_id: 3},
     {user_id: 5, seller_id: 3, item_id: 5}
   ])

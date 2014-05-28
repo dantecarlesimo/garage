@@ -1,0 +1,7 @@
+<%= render :partial => 'nav' %>
+
+<ul>
+  <% @user_transactions.each do |transaction| %>
+     <li><%= link_to transaction.item.name %></li>
+  <% end %>
+</ul>
