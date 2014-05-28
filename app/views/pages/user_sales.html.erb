@@ -1,1 +1,13 @@
-user_sales.html.erb
+<%= link_to "My Garage Sales", '/user_sales'%>
+<%= link_to "My Items" %>
+<%= link_to "My Transactions" %>
+
+<ul>
+  <% @user_sales.each do |sale| %>
+     <li><%= link_to sale.title %><%=sale.id%></li>
+
+  <% end %>
+</ul>
+
+<%= current_user.name %>
+<%= current_user.id %>
