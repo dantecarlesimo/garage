@@ -1,29 +1,35 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :lookup, except: [:new]
-  
-  respond_to :json
-
+ 
   def new
     @item = Sale.find(params[:sale_id]).items.new
-    respond_with @item
+    respond_to do |format|
+      format.html
+      format.json { render :json => @item }
+    end
   end
 
   def create
     @item = @sale.items.create item_params
-
-    if @item.save
-      respond_with @item, status: :created, :location => 'nil'
-    else
-      respond_with @item.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @item.save
+        format.html { redirect_to @sale }
+        format.json { render :json => @item, status: :created, :location => 'nil' }
+      else
+        format.html
+        format.json { render :json => @item.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-    #@item = Item.find(params[:id])
     @sale.items.where(id: params[:id])[0].destroy!
-    if Item.all.where(id: params[:id])[0] == nil
-      respond_with status: :no_content
+    respond_to do |format|
+      if Item.all.where(id: params[:id])[0] == nil
+        format.html { redirect_to @sale }
+        format.json { render :json => @sale, status: :no_content }
+      end
     end
   end
 
