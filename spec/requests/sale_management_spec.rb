@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Sales Management' do
   subject { FactoryGirl.create(:user) }
   before do
+    @user = FactoryGirl.create(:user)
     sign_in_as_a_valid_user
   end
 
@@ -10,6 +11,62 @@ describe 'Sales Management' do
     before(:each) do
       @sale = Sale.create!(title: "Amazing Antiques This Saturday", address: "414 Brannan Street", city: "San Francisco", zipcode: "94114")
       @sale.items.create!([{ name: "Basketball", price: 5, description: "Partially deflated but signed by someone named M. Jordan", transaction_id: 1 }, { name: "Tennis Racket", price: 10, description: "mint condition" }])
+    end
+
+    describe 'users can CRUD garage sales' do
+      it 'view an index of garage sales' do
+        get '/sales'
+        response.status.should == 200
+        response.should render_template :index
+        response.body.should include("Amazing Antiques This Saturday")
+        response.body.should include("Basketball")
+      end
+
+      it 'build a new garage sale' do
+        get '/sales/new'
+        response.status.should == 200
+        response.should render_template :new
+      end
+
+      it 'create a garage sale' do
+        post '/sales', :sale => { title: "Amazing Computer Sale!", address: "414 Brannan Street", city: "San Francisco", zipcode: "94107" }
+        response.status.should == 302
+        follow_redirect!
+
+        Sale.all.where(title: "Amazing Computer Sale!")[0].should_not == nil
+        response.body.should include("Amazing Computer Sale!")
+      end
+
+      xit 'update a garage sale' do
+      end
+
+      it 'destroy a garage sale' do
+        delete "/sales/#{@sale.id}"
+
+        Sale.all.where(title: "Amazing Antiques This Saturday")[0].should == nil
+      end 
+    end
+
+    describe 'users can create and destoy sales.items' do
+      before(:each) do
+      @sale2 = Sale.create!(title: "Incredible Deals", address: "414 Brannan Street", city: "San Francisco", zipcode: "94114")
+      @sale2.items.create!([{name: "Gucci Handbag", price: 5, description: "Great condition"}, { name: "Prada Clutch", price: 10, description: "like new" }])
+    end
+      
+      it 'create an item' do
+        post "/sales/#{@sale2.id}/items", :item => { name: "Rayban Sunglasses", description: "Pretty sure they're authentic.", price: 10 }
+        response.status.should == 302
+
+        @sale2.items.length.should == 3
+        @sale2.items.where(name: "Rayban Sunglasses")[0].should_not == nil
+      end
+
+      it 'destroy an item' do
+        delete "/sales/#{Sale.all.where(title: "Incredible Deals")[0].id}/items/#{@sale2.items.where(name: "Gucci Handbag")[0].id}/"
+        response.status.should == 302
+
+        @sale2.items.where(name: "Gucci Handbag")[0].should == nil
+      end
     end
 
     describe 'GET with JSON' do
@@ -51,6 +108,8 @@ describe 'Sales Management' do
     describe 'POST with JSON' do
       before(:each) do
         post '/sales.json', :sale => { title: "Amazing Garage Sale!", address: "414 Brannan Street", city: "San Francisco", zipcode: "94107"}
+        post '/sales.json', :sale => { title: "Amazing Garage Sale!", address: "414 Brannan Street", city: "San Francisco", zipcode: "94107" }
+
         @result = JSON.parse(response.body)
       end
 
@@ -79,13 +138,13 @@ describe 'Sales Management' do
 
   describe '/sales/:sale_id/items' do
     before(:each) do
-      @sale2 = Sale.create!(title: "Incredible Deals", address: "414 Brannan Street", city: "San Francisco", zipcode: "94114")
-      @sale2.items.create!([{name: "Gucci Handbag", price: 5, description: "Great condition"}, { name: "Prada Clutch", price: 10, description: "like new" }])
+      @sale3 = Sale.create!(title: "Incredible Deals", address: "414 Brannan Street", city: "San Francisco", zipcode: "94114")
+      @sale3.items.create!([{name: "Gucci Handbag", price: 5, description: "Great condition"}, { name: "Prada Clutch", price: 10, description: "like new" }])
     end
+
     describe 'POST with JSON' do
       it 'should create a garage sale item' do
-
-        post "/sales/#{@sale2.id}/items.json", :item => { name: "Rayban Sunglasses", description: "Pretty sure they're authentic.", price: 10 }
+        post "/sales/#{@sale3.id}/items.json", :item => { name: "Rayban Sunglasses", description: "Pretty sure they're authentic.", price: 10 }
         @result = JSON.parse(response.body)
 
         @result["name"].should == "Rayban Sunglasses"
@@ -94,20 +153,21 @@ describe 'Sales Management' do
       end
 
       it 'item should be associated with a garage sale' do
-        post "/sales/#{@sale2.id}/items.json", :item => { name: "Rayban Sunglasses", description: "Pretty sure they're authentic.", price: 10 }
+        post "/sales/#{@sale3.id}/items.json", :item => { name: "Rayban Sunglasses", description: "Pretty sure they're authentic.", price: 10 }
         @result = JSON.parse(response.body)
 
         Sale.all.where(title: "Incredible Deals")[0].items.where(name: "Rayban Sunglasses").should_not == nil
         @result["sale_id"].should == Sale.all.where(title: "Incredible Deals")[0].id
       end
     end
+
     describe 'DELETE with JSON' do
       it 'should delete an item from a sale' do
         delete "/sales/#{Sale.all.where(title: "Incredible Deals")[0].id}/items/#{Item.all.where(name: "Gucci Handbag")[0].id}.json"
         response.response_code.should == 204
 
         Item.all.where(name: "Gucci Hangbag")[0].should == nil
-        Sale.all.where(title: "Incredible Deals")[0].items.length.should == 1         #@sale2.reload.items.length.should == 1 
+        Sale.all.where(title: "Incredible Deals")[0].items.length.should == 1         #@sale3.reload.items.length.should == 1 
       end
     end
   end
