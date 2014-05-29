@@ -11,6 +11,7 @@ Garage::Application.routes.draw do
   get '/my_items', to: 'pages#user_items', as: :my_items
   get '/my_transactions', to: 'pages#user_transactions', as: :my_transactions
 
+  get '/sales/:sale_id/items/:id', to: "items#show"
   post '/sales/:sale_id/items', to: "items#create", as: :item_create
   delete '/sales/:sale_id/items/:id', to: "items#destroy", as: :item
   

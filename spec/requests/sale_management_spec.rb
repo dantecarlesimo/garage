@@ -19,7 +19,6 @@ describe 'Sales Management' do
         response.status.should == 200
         response.should render_template :index
         response.body.should include("Amazing Antiques This Saturday")
-        response.body.should include("Basketball")
       end
 
       it 'build a new garage sale' do

@@ -10,22 +10,26 @@ class TransactionsController < ApplicationController
     if sale
       item = sale.items.find_by_id(item_id)
       if item
-        seller_id = sale.user_id
-        transaction = Transaction.new(user_id: current_user.id, seller_id: seller_id, item_id: item_id)
+        if sale.user_id != current_user.id
+          seller_id = sale.user_id
+          transaction = Transaction.new(user_id: current_user.id, seller_id: seller_id, item_id: item_id)
+        end
       end
     end
 
     if transaction && transaction.save
       item.transaction_id = transaction.id
       if item.save
-        redirect_to sale
+        flash[:sucess] = "item purchased"
+        #sidekiq emailer
+        redirect_to "/sales/#{sale_id}"
       else
-        redirect_to sales_path
+        flash[:error] = "transaction failed"
+        redirect_to sale
       end 
     else
       flash[:error] = "transaction failed"
       redirect_to sales_path
     end
   end
-
 end
