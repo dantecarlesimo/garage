@@ -4,4 +4,6 @@ Garage::Application.routes.draw do
 
   post '/sales/:sale_id/items', to: "items#create"
   delete '/sales/:sale_id/items/:id', to: "items#destroy"
+
+  post '/sales/:sale_id/items/:id', to: "transactions#create", as: "transaction"
 end
