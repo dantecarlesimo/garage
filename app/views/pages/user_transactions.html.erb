@@ -12,10 +12,10 @@
 
   <ul>
     <% @user_transactions.each do |transaction| %>
-       <li><b><%= transaction.item.name %></b><br>
+        <li><b><%= transaction.item.name %></b><br>
         Sold to <%= transaction.user.name%>: <%= transaction.user.email%>  <%= transaction.user.phone %><br>
         <%#= link_to('Delete', transaction, :method => :delete, :confirm => 'Are you sure?', class: "btn btn-xs btn-danger")  %></li>
-    <% end %>
-  </ul>
+    <% end %> 
+   </ul> 
   </div>
 </div>
