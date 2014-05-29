@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-3 dashnav">
+    <%= render :partial => 'nav' %> 
+  </div>
+  <div class="col-md-7">
+
+    <h2>My Items</h2>
+
+    <% if @user_sales == [] %>
+      <p>You don't have any Items</p>
+    <%end%>
+
+    <ul>
+      <% @user_sales.each do |sale| %>
+      <li><h4><b><%= sale.title %></b> <%= sale.date %></h4></li>
+        <ul>
+        <% sale.items.each do |item|%>
+        <li><b><%= item.name %></b>  <%= number_to_currency(item.price) %><br>
+        <%= item.description %>
+        <%= link_to('Delete', "/sales/#{sale.id}/items/#{item.id}", :method => :delete, :confirm => 'Are you sure?', class: "btn btn-xs btn-danger")  %>
+        </li>
+      <% end %>
+    </ul>
+      <% end %>
+
+    </ul>
+  </div>
+</div>

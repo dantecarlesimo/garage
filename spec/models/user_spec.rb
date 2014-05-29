@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   before :each do #instantiates a new user before each test
-    @user = User.create(name: "John Smith", email: "john@smith.com", password: "1234567890", password_confirmation: "1234567890")
+    @user = User.create(name: "John Smith", email: "john@smith.com", password: "1234567890", password_confirmation: "1234567890", phone: "415-555-5555")
   end
 
   it 'should be able to be created' do #test that model/table set up correctly
