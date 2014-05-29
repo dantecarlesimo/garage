@@ -44,6 +44,9 @@ describe 'Sales Management' do
         delete "/sales/#{@sale.id}"
 
         Sale.all.where(title: "Amazing Antiques This Saturday")[0].should == nil
+        follow_redirect!
+
+        response.body.should_not include("Amazing Antiques This Saturday")
       end 
     end
 
@@ -66,6 +69,9 @@ describe 'Sales Management' do
         response.status.should == 302
 
         @sale2.items.where(name: "Gucci Handbag")[0].should == nil
+        follow_redirect!
+
+        response.body.should_not include("Gucci Handbag")
       end
     end
 

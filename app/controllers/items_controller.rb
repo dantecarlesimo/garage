@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
     @sale.items.where(id: params[:id])[0].destroy!
     respond_to do |format|
       if Item.all.where(id: params[:id])[0] == nil
-        format.html { redirect_to @sale }
+        format.html { redirect_to '/' }
         format.json { render :json => @sale, status: :no_content }
       end
     end
