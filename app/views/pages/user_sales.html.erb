@@ -1,16 +1,26 @@
-<%= render :partial => 'nav' %> <%= current_user.name %>
+<div class="row">
+  <div class="col-md-3 dashnav">
+    <%= render :partial => 'nav' %> 
+  </div>
+  <div class="col-md-7">
+  <h2>My Garage Sales</h2>
 
-<h2>My Garage Sales</h2>
+  <% if @user_sales==[] %>
+    <p>You don't have any Garage Sales</p>
+  <%end%>
 
-<% if @user_sales==[] %>
-  <p>You don't have any Garage Sales</p>
-<%end%>
-
-<ul>
+  <ul>
   <% @user_sales.each do |sale| %>
-     <li><%= link_to sale.title %></li>
+     <li><b><%= sale.title %></b> - <%= sale.address %>,<%= sale.city%> <%= sale.zipcode %><br>
+     When: <%= sale.date %> From <%= sale.time_start %> to <%= sale.time_end %><br>
+     Description: <%= sale.description %>
+      <%#= button_to "New Garage Sale", {controller: :sales, action: :delete}, :method => :delete,  class: "btn btn-xs btn-primary" %> <br>     
+     <%= link_to('Delete', sale, :method => :delete, :confirm => 'Are you sure?', class: "btn btn-xs btn-danger")  %>
+    </li>
   <% end %>
-</ul>
+  </ul>
+  </div>
+</div>
 
 
 

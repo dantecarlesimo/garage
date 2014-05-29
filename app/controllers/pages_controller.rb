@@ -1,8 +1,11 @@
 class PagesController < ApplicationController
-   before_action :authenticate_user!, except: [:index]
-#   before_action :lookup, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:landing_page]
 
-  def index
+  def landing_page
+
+  end
+
+  def dashboard
 
   end
 
