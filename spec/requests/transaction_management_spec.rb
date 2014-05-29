@@ -28,6 +28,14 @@ describe 'Transactions Management' do
       @transaction.item_id.should == Item.all.where(name: "1942")[0].id
     end
 
+    it 'is not created if an item is already sold' do
+      post "/sales/#{Sale.all.where(title: "Classic Arcade Games")[0].id}/items/#{Item.all.where(name: "1942")[0].id}"
+      follow_redirect!
+
+      Transaction.all.where(item_id: Sale.all.where(title: "Classic Arcade Games")[0].items.where(name: "1942")[0].id).length.should == 1
+      response.body.should include("Classic Arcade Games")
+    end
+
     it 'is associated with an item' do
       response.status.should == 302
       
@@ -35,13 +43,12 @@ describe 'Transactions Management' do
       @transaction.id.should == Item.all.where(name: "1942")[0].transaction_id
     end
 
-    xit 'removes item from sale index' do
-      post "/sales/#{Sale.all.where(title: "Classic Arcade Games")[0].id}/items/#{Item.all.where(name: "Tempest")[0].id}"
-
+    it 'removes item from sale index' do
       response.status.should == 302
       follow_redirect!
 
-      response.body.should_not include("Tempest")
+      response.body.should_not include("1942")
+      response.body.should include("Tempest")
     end
   end
 end

@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
   before_action :lookup, except: [:new]
  
   def new
@@ -8,6 +8,10 @@ class ItemsController < ApplicationController
       format.html
       format.json { render :json => @item }
     end
+  end
+
+  def show
+    @item = @sale.items.where(id: params[:id])[0]
   end
 
   def create
