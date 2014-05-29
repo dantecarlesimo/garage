@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action :lookup, only: [:edit, :update, :destroy]
+  # before_action :authenticate_user!, except: [:index]
+  before_action :lookup, only: [:edit, :show, :update, :destroy]
 
   def index
     @sales = Sale.all
@@ -40,6 +40,7 @@ class SalesController < ApplicationController
   end
 
   def show
+
   end
 
   def edit

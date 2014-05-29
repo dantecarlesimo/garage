@@ -10,6 +10,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    @item = @sale.items.where(id: params[:id])[0]
+  end
+
   def create
     @item = @sale.items.create item_params
     respond_to do |format|

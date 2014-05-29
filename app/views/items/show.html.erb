@@ -1,0 +1,13 @@
+<div>
+ 
+  <li><%= @item.name %> <%= number_to_currency(@item.price) %> <%#= @item.description %></li>
+
+  <%= @sale.date %>  <%= @sale.title %>  <%= @sale.city %>  <%= @sale.zipcode %>  <%= @sale.description %>  <%= @sale.time_start %>  <%= @sale.time_end %>  <%= @sale.user.email unless @sale.user.blank? %><%# =image_tag sale.photo_file_name.url(:thumb) %>
+  <div>
+    <%= button_to 'Confirm' %>
+  </div>
+  <div>
+    <%= button_to 'Cancel' %>
+    <!-- post to transactions create -->
+  </div>
+</div>

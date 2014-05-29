@@ -1,0 +1,14 @@
+<div>
+   <% @sales.each do |sale| %>
+        <li><%= link_to sale.title, sale_path(sale) %> <%= sale.address %>
+          <%= sale.city %>
+         <%# =image_tag sale.photo_file_name.url(:thumb) %>
+          <%= sale.description %>
+          <%= sale.date %>
+        </li><br>
+  <% end %>
+</div>
+
+
+
+

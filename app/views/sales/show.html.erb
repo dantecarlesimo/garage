@@ -1,0 +1,10 @@
+<div>
+
+  <% @sale.items.each do |item| %>
+    <li><%= link_to item.name, sale_path(item.sale) %> $<%= item.price %></li>
+  <% end %>
+
+  <%= @sale.date %>  <%= @sale.title %>  <%= @sale.city %>  <%= @sale.zipcode %>  <%= @sale.description %>  <%= @sale.time_start %>  <%= @sale.time_end %>  <%= @sale.user.email unless @sale.user.blank? %> <%# =image_tag sale.photo_file_name.url(:thumb) %>
+
+  <%= button_to 'New Item' %>
+ </div>
