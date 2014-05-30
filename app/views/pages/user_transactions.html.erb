@@ -30,7 +30,7 @@
             <% @user_as_buyer_transactions.each do |transaction| %>
               <% seller = User.find(transaction.seller_id) %>
               <% sale = Sale.find(transaction.item.sale_id) %>
-                <li><%= link_to transaction.item.name, "#{transaction.item.photo.url}" %> <em>$<%= transaction.item.price %></em><br>
+                <li><%= transaction.item.name %> <em>$<%= transaction.item.price %></em><br>
                     <%= transaction.item.description %><br>
                       <ul>
                         <li>Seller Name: <%= seller.name %>, Phone: <%= seller.phone %></li>
