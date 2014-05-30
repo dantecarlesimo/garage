@@ -1,6 +1,6 @@
 <div>
    <% @sales.each do |sale| %>
-        <li><%= link_to sale.title, sale_path(sale) %> <%= sale.address %>
+        <li><%= image_tag sale.photo.url(:thumb) %> <%= link_to sale.title, sale_path(sale) %> <%= sale.address %>
           <%= sale.city %>
          <%# =image_tag sale.photo_file_name.url(:thumb) %>
           <%= sale.description %>
