@@ -52,3 +52,26 @@
 <% end %>
 
 
+<script type="text/javascript">
+    var count = 1;
+  $(".new_sale_item").click(function(evt){
+      evt.preventDefault();
+      console.log("clicked");
+
+      var name = '<input id="sale_items_attributes_' + count + '_name" name="sale[items_attributes][' + count + '][name]" placeholder="Sale Item" type="text">';
+
+      var describe = '<input id="sale_items_attributes_' + count + '_description" name="sale[items_attributes][' + count + '][description]" placeholder="Description" type="text">';
+
+      var price = '<input id="sale_items_attributes_' + count + '_price" name="sale[items_attributes][' + count + '][price]" placeholder="Cost" type="text">';
+
+    whole = "<p>"+ name + describe + price +"</p>";
+      $("#items").append(whole);
+
+
+      
+      count++;
+      console.log(count);
+
+
+       });
+</script>
