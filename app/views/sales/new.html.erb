@@ -1,34 +1,71 @@
 <%= form_for @sale, :multipart => true do |f| %>
   
-  <p>  
+  <div>  
     <%= f.label :title %>  
-    <%= f.text_field :title, placeholder: "Title" %>  
-  </p>  
-  <p>  
+    <%= f.text_field :title, placeholder: "title" %>  
+  </div>  
+  <div>  
     <%= f.label :address %>  
-    <%= f.text_field :address, placeholder: "Address" %>  
-  </p>  
-  <p>  
+    <%= f.text_field :address, placeholder: "address" %>  
+  </div>  
+  <div>  
     <%= f.label :city %>  
-    <%= f.text_field :city, placeholder: "City" %>  
-  </p>  
-  <p>  
+    <%= f.text_field :city, placeholder: "city" %>  
+  </div>  
+  <div>  
     <%= f.label :zipcode %>  
-    <%= f.text_field :zipcode, placeholder: "Zipcode" %>  
-  </p>  
-  <p>  
+    <%= f.text_field :zipcode, placeholder: "zipcode" %>  
+  </div>  
+  <div>  
     <%= f.label :description %>  
-    <%= f.text_field :description, placeholder: "Description" %>  
-  </p>  
-  <p>  
+    <%= f.text_field :description, placeholder: "description" %>  
+  </div>  
+  <div>  
+    <%= f.label :date %>  
+    <%= f.text_field :date, placeholder: "Date" %>  
+  </div>
+  <div>  
     <%= f.label :time_start %>  
     <%= select_tag "sale[start_time]", options_for_select((9..21).map {|item| time = item% 12; item > 11? time = time.to_s + "am": time = time.to_s+ "pm"; [time,item] }) %>
-  </p>
-  <p>  
+  </div>
+  <div>  
     <%= f.label :time_end %>  
     <%= select_tag "sale[end_time]", options_for_select((9..21).map {|item| time = item% 12; item > 11? time = time.to_s + "am": time = time.to_s+ "pm"; [time,item] }) %>
-  </p>
-    <%= f.file_field :uploaded_file %>
+  </div>
+    <%= f.file_field :photo %>
+  <div id="items">
+    <div>
+      <%= f.fields_for :items, @sale.items.build do |b| %>
+        <%= b.text_field :name, placeholder: "name" %>
+        <%= b.text_field :description, placeholder: "description" %>
+        <%= b.text_field :price, placeholder: "price" %>
+        <button class="new_sale_item"> Add Item</button>
+        <%= b.file_field :photo %>
+      <% end  %>
+    </div>
+  </div>
 
-    <%= f.submit "Upload file" %>
+  <%= f.submit "create sale" %> 
 <% end %>
+<script type="text/javascript">
+    var count = 1;
+  $(".new_sale_item").click(function(evt){
+      evt.preventDefault();
+      console.log("clicked");
+
+      var name = '<input id="sale_items_attributes_' + count + '_name" name="sale[items_attributes][' + count + '][name]" placeholder="name" type="text"> ';
+
+      var describe = '<input id="sale_items_attributes_' + count + '_description" name="sale[items_attributes][' + count + '][description]" placeholder="description" type="text"> ';
+
+      var price = '<input id="sale_items_attributes_' + count + '_price" name="sale[items_attributes][' + count + '][price]" placeholder="price" type="text"> ';
+
+      var file = '<input id="sale_items_attributes_' + count + '_photo" name="sale[items_attributes][' + count + '][photo]" type="file"> ';
+
+      whole = "<div>"+ name + describe + price + file +"</div>";
+      $("#items").prepend(whole);
+      
+      count++;
+      console.log(count);
+
+    });
+</script>
