@@ -1,11 +1,14 @@
 <div>
   <li><%= @item.name %> <%= number_to_currency(@item.price) %> <%= @item.description %></li>
-
   <%= @sale.date %>  <%= @sale.title %>  <%= @sale.city %>  <%= @sale.zipcode %>  <%= @sale.description %>  <%= @sale.time_start %>  <%= @sale.time_end %>  <%= @sale.user.email unless @sale.user.blank? %><%# =image_tag sale.photo_file_name.url(:thumb) %>
-  <div>
-    <%= button_to 'confirm', "/sales/#{@sale.id}/items/#{@item.id}" %> <!--  posts to transactions#create -->
-  </div>
-  <div>
-    <%= button_to 'cancel', "/sales/#{params[:sale_id]}/", method: :get %>
-  </div>
+	  <div>
+	  	<% if @item.transaction_id == nil %>
+	    	<%= button_to 'confirm', "/sales/#{@sale.id}/items/#{@item.id}" %> <!--  posts to transactions#create -->
+	  	<% end %>
+	  </div>
+	  <div>
+	  	<% if @item.transaction_id == nil %>
+	    	<%= button_to 'cancel', "/sales/#{params[:sale_id]}/", method: :get %>
+	  	<% end %>
+	  </div>
 </div>

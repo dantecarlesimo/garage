@@ -3,19 +3,50 @@
     <%= render :partial => 'nav' %> 
   </div>
   <div class="col-md-7">
-
-    <h2>My Transactions</h2>
-
-    <% if @user_transactions==[] %>
-      <p>You don't have any Transactions</p>
-    <%end%>
-
+    
+    <h2>Transactions</h2>
     <ul>
-      <% @user_transactions.each do |transaction| %>
-        <li><b><%= transaction.item.name %></b><br>
-          Sold to <%= transaction.user.name%>: <%= transaction.user.email%>  <%= transaction.user.phone %>
-        </li>
-      <% end %> 
+      <% if @user_as_seller_transactions == [] %>
+        <li>You have not sold any items.</li>
+      <% else %>
+        <li>Items Sold:</li>
+          <ul> 
+            <% @user_as_seller_transactions.each do |transaction| %>
+              <li><%= transaction.item.name %>, $<%= transaction.item.price %></li>
+                  <ul>
+                    <li>Buyer Name: <%= transaction.user.name%> Phone: <%= transaction.user.phone %></li>
+                    <li>Email: <%= mail_to transaction.user.email, transaction.user.email %></li>
+                  </ul>
+              </li>
+            <% end %> 
+          </ul>
+      <% end %>
+      
+      <% if @user_as_buyer_transactions == [] %>
+        <li>You have not purchased any items.</li>  
+      <% else %>
+        <li>Items Purchased:</li>
+          <ul>
+            <% @user_as_buyer_transactions.each do |transaction| %>
+              <% seller = User.find(transaction.seller_id) %>
+              <% sale = Sale.find(transaction.item.sale_id) %>
+                <li><%= link_to transaction.item.name, "#{transaction.item.photo.url}" %> <em>$<%= transaction.item.price %></em><br>
+                    <%= transaction.item.description %><br>
+                      <ul>
+                        <li>Seller Name: <%= seller.name %>, Phone: <%= seller.phone %></li>
+                        <li>Email: <%= mail_to seller.email, seller.email %></li>
+                          <ul>
+                            <li>Title: <%= sale.title %><em> (<%= sale.date %>)</em></li>
+                            <li>Address: <%= sale.address %>, <%= sale.city %>, <%= sale.zipcode %></li>
+                            <li>From: <%= sale.time_start %> To: <%= sale.time_end %></li>
+                            <li>Description: <%= sale.description %></li>
+                          </ul>
+                      </ul>
+                </li>
+            <% end %>
+          </ul>
+      <% end %>
     </ul> 
+  
   </div>
 </div>

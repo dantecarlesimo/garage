@@ -16,6 +16,7 @@ class PagesController < ApplicationController
   end
 
   def user_transactions
-    @user_transactions = Transaction.where(seller_id:current_user)
+    @user_as_buyer_transactions = Transaction.where(user_id: current_user.id)
+    @user_as_seller_transactions = Transaction.where(seller_id: current_user.id)
   end
 end

@@ -27,7 +27,6 @@ class SalesController < ApplicationController
 
   def create
     @sale = current_user.sales.create sale_params
-binding.pry
     respond_to do |format|
       if @sale.save!
         format.html { redirect_to @sale } # redirect user to ? after garage sale create
