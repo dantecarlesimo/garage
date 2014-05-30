@@ -6,4 +6,6 @@
   <% end %>
 
   <%= @sale.date %>  <%= @sale.title %>  <%= @sale.city %>  <%= @sale.zipcode %>  <%= @sale.description %>  <%= @sale.time_start %>  <%= @sale.time_end %>  <%= @sale.user.email unless @sale.user.blank? %> <%# =image_tag sale.photo_file_name.url(:thumb) %>
+
+  <%= image_tag @sale.photo.url(:medium) %><br>
  </div>

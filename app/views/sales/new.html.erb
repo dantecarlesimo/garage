@@ -46,7 +46,7 @@
     <%= f.label :time_end %>  
     <%= select_tag "sale[end_time]", options_for_select((9..21).map {|item| time = item% 12; item > 11? time = time.to_s + "am": time = time.to_s+ "pm"; [time,item] }) %>
   </p>
-    <%= f.file_field :uploaded_file %>
+    <%= f.file_field :photo %>
 
     <%= f.submit "Submit Sale" %>
 <% end %>
