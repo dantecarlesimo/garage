@@ -21,6 +21,24 @@
     <%= f.text_field :description, placeholder: "Description" %>  
   </p>  
   <p>  
+    <%= f.label :date %>  
+    <%= f.text_field :date, placeholder: "Date" %>  
+  </p>  
+  <div id="items">
+     <%= f.fields_for :items, @sale.items.build do |b| %>
+      <p></p>
+      
+      <%= b.text_field :name, placeholder: "Sale Item" %>
+
+      <%= b.text_field :description, placeholder: "Description" %>
+
+      <%= b.text_field :price, placeholder: "Cost" %>
+      <button class="new_sale_item"> Add Item</button>
+     
+      <% end  %>
+    </div>
+ 
+  <p>  
     <%= f.label :time_start %>  
     <%= select_tag "sale[start_time]", options_for_select((9..21).map {|item| time = item% 12; item > 11? time = time.to_s + "am": time = time.to_s+ "pm"; [time,item] }) %>
   </p>
@@ -30,5 +48,30 @@
   </p>
     <%= f.file_field :uploaded_file %>
 
-    <%= f.submit "Upload file" %>
+    <%= f.submit "Submit Sale" %>
 <% end %>
+
+
+<script type="text/javascript">
+    var count = 1;
+  $(".new_sale_item").click(function(evt){
+      evt.preventDefault();
+      console.log("clicked");
+
+      var name = '<input id="sale_items_attributes_' + count + '_name" name="sale[items_attributes][' + count + '][name]" placeholder="Sale Item" type="text">';
+
+      var describe = '<input id="sale_items_attributes_' + count + '_description" name="sale[items_attributes][' + count + '][description]" placeholder="Description" type="text">';
+
+      var price = '<input id="sale_items_attributes_' + count + '_price" name="sale[items_attributes][' + count + '][price]" placeholder="Cost" type="text">';
+
+    whole = "<p>"+ name + describe + price +"</p>";
+      $("#items").append(whole);
+
+
+      
+      count++;
+      console.log(count);
+
+
+       });
+</script>

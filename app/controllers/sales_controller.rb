@@ -26,14 +26,14 @@ class SalesController < ApplicationController
   end
 
   def create
-    @sale = Sale.new sale_params
-    @sale.user_id = current_user.id
+    @sale = current_user.sales.create sale_params
+binding.pry
     respond_to do |format|
-      if @sale.save
-        format.html { redirect_to '/sales/' } # redirect user to ? after garage sale create
+      if @sale.save!
+        format.html { redirect_to @sale } # redirect user to ? after garage sale create
         format.json { render :json => @sale , status: :created }
       else
-        format.html { redirect_to '/sales/new' }
+        format.html { redirect_to '/sales/new', status: :unprocessable_entity }
         format.json { render :json => @sale.errors, status: :unprocessable_entity }
       end
     end
@@ -78,6 +78,6 @@ private
   end
 
   def sale_params
-    params.require(:sale).permit(:address, :city, :zipcode, :date, :time_start, :time_end, :title, :description, :photo)
+    params.require(:sale).permit(:address, :city, :zipcode, :date, :time_start, :time_end, :title, :description, :photo, items_attributes: [:name,:description,:price])
   end
 end
